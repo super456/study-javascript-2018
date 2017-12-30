@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>闭包函数练习</title>
+</head>
+<body>
+    <script>
+    //作用域连效果——scope chain
+    var a=1;
+    function test(){
+        var b=2;
+        function test1(){
+            //主要是访问父级的作用域或自身的作用域
+            var c=3;
+            alert(a);
+            alert(b);
+            alert(c);
+            return c;
+        }
+        test1();
+    }
+    test();
+
+    //词法作用域：每一个函数都有
+    function f1(){
+        var b=1;
+        alert(b);
+        return f2();
+    }
+    function f2(){
+        var c=2;
+        alert(b);//这里会输出undefined
+        return b; //会报错，b是没有定义的
+    }
+    f1();
+    var b=100;
+    alert(f1());
+
+
+    //1.通过闭包突破全局作用域链（重点）
+    function func1(){
+        var aa="du456";
+        return function(){
+            return aa;
+        };
+    }
+  //  alert(aa);//直接是输不出来的,会显示undefined
+    var t1=func1();
+    alert(t1());//注意这里的变量需要添加括号，因为是函数
+
+//2.通过全局作用域变量的突破闭包
+var n;
+function func2(){
+    var bb="This is a bb";
+    n=function(){
+        return bb;
+    };
+}
+func2();
+document.write(n());
+
+//3.闭包操作
+function func3(param){
+    var n=function(){
+        return param;
+    };
+    param++;
+    return n;
+
+}
+var t2=func3(456);//这里返回的是457
+document.write('<hr/>');
+document.write(t2());
+
+
+    </script>
+</body>
+</html>

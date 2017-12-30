@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>犀牛书函数的调用练习</title>
+</head>
+<body>
+    <script>
+    //属性访问表达式
+    var calculator={//对象直接量
+        operand1:1,
+        operand2:1,
+        add:function(){
+            //注意this关键字的用法，this指代当前的对象
+           this.result=this.operand1+this.operand2;//注意result是全局变量
+          //  result=operand1+operand2;//这里会报错：operand1和operand2是没有定义的，意思是访问不到这个对象的属性
+        }
+    };
+    calculator.add();//这个方法调用计算1+1的结果
+    alert(calculator.result);
+
+
+    //调用嵌套函数的this，理解这个this值的用法及作用（重点）
+    var o={//对象o
+        m:function(){//对象中的方法m()
+            var self=this;//将this的值保存至一个变量中
+            console.log(this==o);//输出true，this就是这个对象o
+            f();//调用辅助函数f（）
+            function f(){//定义一个辅助嵌套函数f()
+                console.log(this==o);//false，this的值是全局对象或undefined
+                console.log(self==o);//true，self指向外部函数的this值
+            }
+        }
+    }
+    o.m();//执行这个对象的属性函数的方法
+
+
+    function func1(x){
+        console.log(x);//输出实参的初始值
+        arguments[0]=null;//修改实参数组的元素同样会修改x的值
+        console.log(x);//输出“null”
+    }
+    func1(200);
+    
+    </script>
+</body>
+</html>

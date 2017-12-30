@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>犀牛书对象属性用作实参</title>
+</head>
+<body>
+    <script>
+    //将原始数组的length元素复制至目标数组
+    //开始复制原始数组的from_start元素
+    //并且将其复制至目标数组的to_start中
+    //要记住实参的顺序并不容易
+    function arraycopy(from,from_start,to,to_start,length){
+
+    }
+
+
+
+    //通过键值对传递对象实参并赋值
+    //并且会设置默认值
+    function easycopy(args){
+        arraycopy(
+            args.from,
+            args.from_start||0,
+            args.to,
+            args.to_start||0,
+            args.length);
+        
+    }
+    var a=[1,2,3,4],b=[];
+    easycopy({from: a,to: b,length: 4});
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>函数调用的特殊形式</title>
+</head>
+<body>
+    <script>
+        //内部私有函数的例子
+    //定义一个a函数，再定义一个在a函数内部的b函数，通过a函数调用b函数
+    function a(param){
+        function b(param1){
+            return param1+10;
+        };
+        return "通过a函数调用b函数的示例："+b(param);
+    }
+    document.write(a(10));
+    
+    //利用函数标记法重写上面的代码
+    function c(param){
+        var d=function(param1){
+            return param1+20;
+        };
+        return "在c函数里面调用d函数结果为："+d(param);
+    }
+    document.write("<br/>");
+    document.write(c(100));
+
+    //返回函数的函数
+    function e(){
+        document.write("<br/>");
+        document.write("eee");
+        return function(){
+            document.write("This is a E");
+        };
+    }
+    var f=e();
+    f();
+    document.write('<br/>');
+    //立即调用函数内部返回函数，最简单方法
+    e()();//e函数内有返回的函数才可以这样写两个括号
+
+    //方法体内重写自己的函数
+    function g(){
+        document.write('<hr/>');
+        document.write("This is a G");
+        g=function(){
+            document.write('<br/>');
+            document.write("This is a new G");
+        };
+    }
+    g();//第一次调用会先执行方法体的函数，函数会被重写，但没有输出内容
+    g();//第二次调用会直接输出覆盖后的函数内容
+   // g()();//这个方法是不行的
+
+   //根据浏览器特性执行相应的函数
+   function h(){
+       function setUp(){
+           document.write("<hr/>");
+           document.write("do more something");
+       }
+       function doWhat(){
+           document.write("<br/>");
+           document.write("What I do");
+       }
+       setUp();
+       return doWhat;//注意这个是返回引用，而不是执行这个函数，没有添加括号
+   };
+   h();
+
+    </script>
+</body>
+</html>

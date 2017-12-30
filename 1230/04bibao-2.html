@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>闭包的应用</title>
+</head>
+<body>
+    <script>
+    //1.函数内定义全局变量调用函数
+    function func1(){
+        var n=1;
+        test=function(){//注意这个是全局变量函数，没有添加var定义
+            n+=1;
+        };
+
+        //以下就是闭包代码
+        function func2(){
+            alert(n);
+        }
+        return func2;//这里是返回函数的引用（指针）,并没有调用函数
+
+    }
+    var res=func1();
+    alert(res());//第一个弹出的数是调用了func2函数，第二个弹出的是res变量没有返回值，所以undefined
+
+    //闭包的第二个作用是：可以将变量的值始终保存在内存中不变
+    test();
+    alert(res());
+
+    //2.设置和访问读取变量的值
+    var setValue,getValue;//全局变量
+
+    //自调用函数
+    (function(){
+        var n=1;
+        getValue=function(){
+            return n;
+        };
+        setValue=function(x){
+            n=x;
+        };
+
+    })();
+    //alert(n);//这里得不到这个值
+
+    //类似访问控制，间接的访问和设置函数，而函数的内部变量值并未改变
+    alert(getValue());
+    setValue(456);
+    alert(getValue());
+
+
+    //3.闭包迭代器
+    function func3(x){
+        var i=0;
+        return function(){
+            return x[i++];
+        };
+    }
+    var next=func3(['a','b','c','d']);//传递进去的是数组
+    document.write(next());
+    document.write('<br/>');
+    document.write(next());
+    document.write('<br/>');
+    document.write(next());
+
+
+    //4.常用的闭包应用bug
+    function func4(){
+        var a=[];
+        var i=0;
+        for(i;i<3;i++){
+            a[i]=function(){
+                return i;
+            };
+        }
+        return a;
+    }
+    var t1=func4();
+    document.write('<hr/>');
+    //以下返回的值都是最后一个i的值：3
+    document.write(t1[0]());
+    document.write(t1[1]());
+    document.write(t1[2]());
+
+    //修改以上的显示，主要是添加自调用函数解决
+    function func5(){
+        var a=[];
+        var i=0;
+
+
+        // for(i;i<3;i++){
+        //     a[i]=(function(x){
+        //         return function(){
+        //             return x;
+        //         }
+        //     })(i);
+        // }
+
+        //上面注释的部分跟下面部分等同
+        function test(x){
+            return function(){
+                return x;
+            }
+        }
+        
+        for(i;i<3;i++){
+            a[i]=test(i);
+        }
+
+        return a;
+    }
+    var t2=func5();
+    document.write('<hr/>');
+    document.write(t2[0]());
+    document.write(t2[1]());
+    document.write(t2[2]());
+
+    </script>
+</body>
+</html>

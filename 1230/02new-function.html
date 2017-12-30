@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>补充一点函数创建——js内置构造器</title>
+</head>
+<body>
+    <script>
+    //通过js内置函数构造器创建函数的方式
+    var func=new Function ('a','b','return a+b');//注意函数首字母大写
+    document.write(func(10,20));
+    //以上函数定义方法等同于
+    var func1=function(a,b){return a+b;}
+    document.write('<br/>');    
+    document.write(func1);
+    document.write('<br/>');    
+    document.write(func1(200,10));
+    
+    </script>
+</body>
+</html>
