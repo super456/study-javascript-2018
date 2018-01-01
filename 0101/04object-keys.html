@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>内建对象keys()的练习</title>
+</head>
+<body>
+    <script>
+    //简单练习keys()方法体的应用
+    //该Object.keys()方法返回一个给定对象自己可枚举属性的数组，其顺序与for...in循环提供的顺序相同（区别在于for-in循环枚举了原型链中的属性）。
+   // Object.keys()返回一个数组，其元素是对应于直接找到的枚举属性的字符串object。属性的排序与通过手动循环对象的属性所给出的顺序相同。
+    //循坏输出的可枚举的属性值，注意会按照数组索引值顺序
+    var a=['a','b','c','d'];
+    console.log(Object.keys(a));// ["0", "1", "2", "3"]
+    var obj={
+        0:'a',
+        1:'b',
+        2:'c'
+    };
+    console.log(Object.keys(obj));// ["0", "1", "2"]
+    //输出对象的属性值顺序
+    var obj1={
+        100:'a',
+        2:'b',
+        57:'c'
+    };
+    console.log(Object.keys(obj1));//["2", "57", "100"]
+    
+    //创建一个不可枚举的对象
+    var obj2=Object.create({},{
+        getFoo :{
+            value:function(){
+            
+            return this.foo;
+        }
+        }
+    });
+    obj2.foo=456;
+    console.log(Object.keys(obj2));//["foo"]
+
+    //如果想获取一个对象的所有属性，包括不可枚举的，object.getOwnPropertyNames()
+    console.log(Object.getOwnPropertyNames(a));// ["0", "1", "2", "3", "length"]
+
+    var obj={get foo(){return 456;}};
+    console.log(Object.getOwnPropertyDescriptor(obj,'foo'));//{get: ƒoo(), set: undefined, enumerable: true, configurable: true}
+
+
+    
+
+    </script>
+</body>
+</html>

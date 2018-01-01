@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>对象的可扩展性</title>
+</head>
+<body>
+    <script>
+    //检测对象是否可以扩展的，可扩展的对象，可以动态的添加属性
+    var obj={};
+    console.log(Object.isExtensible(obj));//true
+
+    var d=new Date();
+    console.log(Object.isExtensible(d));//true
+   
+    //向对象obj添加属性及值
+    obj.x=456;
+    console.log(obj.x);//456
+
+    //通过perventExtensions()将对象变为不可扩展的，注意不可以解封
+    obj1=Object.preventExtensions(obj);
+    console.log(obj1===obj);//true
+    console.log(Object.isExtensible(obj1));//false
+    
+    </script>
+</body>
+</html>
