@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>对象的原型高级内容练习</title>
+</head>
+<body>
+    <script>
+    //
+    function foo(a,b){
+        return a*b;
+    }
+    console.log(foo.length);//2
+    console.log(foo.constructor);//指向构造函数，空的函数  ƒ Function() { [native code] }
+    console.log(foo.prototype);//{constructor: ƒ}初始值为空对象
+
+
+    //定义构造器函数，新建对象，主要是通过NEW 关键字
+    function product(name,color){
+        this.name=name;
+        this.color=color;
+        this.whatareyou=function(){
+            return 'This is a '+this.name+"  "+this.color;
+        };
+    }
+    product.prototype={
+        price:6888,
+        memory:64,
+        getinfo:function(){
+            return 'price:  '+this.price+'  memory:'+this.memory;
+        }
+    };
+    var obj1=new product('苹果6','pink');
+    console.log(obj1.color);
+    console.log(obj1.getinfo());//注意这里调用方法要添加括号
+    console.log(obj1.name);
+    console.log(obj1.whatareyou());//This is a 苹果6  pink
+
+    //这里可以添加一个原型函数对象上的方法，新建的函数对象仍然可以访问该方法
+    product.prototype.get=function(what){
+       // console.log(this);//product {name: "苹果6", color: "pink", whatareyou: ƒ}
+        return this[what];//注意这个this的对象
+    };
+    console.log(obj1.get('name'));
+    console.log(obj1.get('color'));
+    
+    
+
+    
+    </script>
+</body>
+</html>

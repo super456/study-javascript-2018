@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>原型链的继承练习</title>
+</head>
+<body>
+    <script>
+    function shape(){
+        this.name='shape';
+        this.toString=function(){
+            return this.name;
+        }
+    }
+
+    function twoDshape(){
+        this.name='2D Shape';
+    }
+
+    function Triangle(side,height){
+        this.name='Triangle';
+        this.side=side;
+        this.height=height;
+        this.getArea=function(){
+            return this.side*this.height/2;
+        }
+    }
+
+    //原型链上的继承，twoDshape继承shape，Triangle继承twoDshape
+    //只是单纯的继承构造器的属性及方法，不会对原对象造成影响
+    twoDshape.prototype=new shape();
+    Triangle.prototype=new twoDshape();
+    console.log(twoDshape.constructor);//ƒ Function() { [native code] }  空对象
+    console.log(Triangle.constructor);//ƒ Function() { [native code] }  空对象
+    var obj=new Triangle(5,5); 
+    console.log(obj.getArea());//12.5
+    console.log(obj.toString());//Triangle，重点需要搞懂这一模块流程
+
+
+//instanceof的理解：如果右侧构造函数的prototype属性能在左侧的对象的原型链中找到, 那么就返回true, 否则就返回false
+    console.log(obj instanceof Triangle);//true
+    console.log(obj instanceof twoDshape);//true
+    console.log(obj instanceof shape);//true
+
+
+    
+
+
+
+
+    //重置constructor属性
+    twoDshape.prototype.constructor=twoDshape;
+    Triangle.prototype.constructor=Triangle;
+    console.log(twoDshape.constructor);//ƒ Function() { [native code] }  空对象
+    console.log(Triangle.constructor);//ƒ Function() { [native code] }  空对象
+    var obj=new Triangle(5,5); 
+    console.log(obj.getArea());//12.5
+    console.log(obj.toString());//Triangle，重点需要搞懂这一模块流程
+
+
+
+    
+    </script>
+</body>
+</html>

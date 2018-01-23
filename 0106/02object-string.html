@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>String对象的练习</title>
+</head>
+<body>
+    <script>
+    var s1='dudu456';
+    console.log(typeof s1);//string
+    console.log(s1.length);//7
+    console.log(s1[5]);//5
+
+    var s2=new String('dudu');
+    console.log(typeof s2);//object
+    //直接使用字符串调用方法
+    console.log('我叫某某某'.length);//5
+    console.log('我叫某某某'[2]);//某
+    
+
+    //常用对象调用方法
+    //charAt(param)，返回是一字符串指定索引值param的字符，只能返回一个字符,如果超过字符串下标索引值，将返回空的信息
+    var s3='king';
+    console.log(s3.charAt(3));//g
+    console.log(s3.charAt(10));//
+
+    //charCodeAt(n)：返回指定字符的ASCII码值,取得字符串中第n个字符的编码，注意n为负数，大于或等于字符串长度时，返回NaN
+    console.log(s3.charCodeAt(0));//107
+    console.log(s3.charCodeAt(100));//NaN
+
+
+    //fromCharCode(n1,n2,...)：根据指定的ASCII码值返回对应的字符
+    var s4='abcdef';
+    //console.log(s4.fromCharCode(97));
+
+    //concat(n1,n1,...)：连接字符串，相当于：+，可以连接一个或多个字符串
+    var s5='我';
+    console.log(s5.concat(s4,s3,s2));//我abcdefkingdudu
+
+    //indexof(substring[,start]):搜索相关的字符串的字符首次出现的位置，返回索引值，strat表示开始搜索的起始索引值位置，区分大小写
+    var s6='This is a test';
+    console.log(s6.indexOf('t'));//10
+    console.log(s6.indexOf('s',5));//6
+    //通过indexof()搜索统计一个字符在字符串中出现的次数
+    var test='dhkajfnkajdsnfgkjasdnkjgaskjldkjsaklz';
+    var count=0;
+    var judge=test.indexOf('z');
+        while(judge!=-1){
+            count++;
+            judge=test.indexOf('z',judge+1);//1
+        }
+    
+    console.log(count);
+
+    //lastIndexOf():搜索指定字符串最后一次出现的位置
+    
+    //localeCompare()，比较两个字符的ASCII码值的大小
+
+
+    //match()：找到一个或多个正则表达式的结果
+    var s7="This is a very simple test";
+    var re=/is/i;//"i"表示忽略大小写
+    console.log(s7.match(re));//["is", index: 2, input: "This is a very simple test"]
+    var re=/is/g;//"g"表示全局匹配，返回的是数组
+    console.log(s7.match(re));//(2) ["is", "is"]
+
+
+    //search()：根据正则表达式进行搜索，返回索引值，没有则返回-1
+    console.log(s7.search(/Is/ig));//2
+
+    //replace(param1,param2)：参数1表示正则表达式规则，参数2表示替换的规则
+    var s8="2018-01-06";
+    console.log(s8.replace(/(\d{4})-(\d{2})-(\d{2})/,"$2/$3/$1"));//01/06/2018
+    //通过调用函数方法来替换参数2的规则
+    var newStr=s8.replace(/(\d{4})-(\d{2})-(\d{2})/,func);
+    function func(match,x1,x2,x3){
+        return [x2,x3,x1].join("//");
+    }
+    console.log(newStr);//  01//06//2018
+
+
+
+    //slice(start,end)：截取指定起始和结束索引值的字符串，一个参数和两个参数都可以，也可以是负数
+    //substr(start,length)：参数一是截取的起始索引值，第二个参数是截取的长度
+    //substring(from,to)：起始点和结束点
+
+
+    //split(param[,limit])：将字符串拆分成数组形式，参数表示拆分的规则,limit表示限制数组的最大长度
+    var s9='thisaisaisais';
+    console.log(s9.split('a'));//(4) ["this", "is", "is", "is"]
+    console.log(s9.split('a',2));//(2) ["this", "is"]
+    
+
+    //字符串大小写相关的方法
+    console.log('king'.toLowerCase());
+    console.log('king'.toLocaleLowerCase());
+    console.log('DUDUDU'.toUpperCase());
+    console.log('DUDUDU'.toLocaleUpperCase());
+    
+
+    //trim()：去掉字符串两端的空白字符
+    var s10='    abc     ';
+    console.log(s10);//    abc     
+    console.log(s10.trim());//abc
+
+    //anchor(param)：产生一个锚点
+    var s11="This is a s11";
+    document.body.innerHTML=s11.anchor('This is a anchor');
+
+
+    //link(url)：产生一个连接，参数是url跳转地址
+    var title="This is my blog!";
+    var url='https://super456.github.io';
+    document.write("Click here"+title.link(url));
+    
+    
+    </script>
+</body>
+</html>

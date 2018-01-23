@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>对象属性及原型属性练习</title>
+</head>
+<body>
+    <script>
+    //自身属性级别高于原型属性
+    function Product(name){
+        this.name=name;
+    }
+    Product.prototype.name='IPhone';//这里是原型属性
+    var obj=new Product('电视');//注意这里需要重新定义函数对象，不然会报错
+    console.log(obj.name); //电视
+    delete obj.name;//删除自身属性
+    console.log(obj.name);//注意这的是原型上的属性值：IPhone
+    obj.name='音响';
+    console.log(obj.name);//音响
+
+    //for in 可以遍历可枚举的属性及原型属相值
+    var obj1={
+        name:'dudu',
+        age:456,
+        address:'西学楼10'
+    }
+    //obj1.prototype.email='110';对象不能直接添加原型属性，函数对象可以
+    for (var i in obj1) {
+        console.log(obj1[i]);
+    }
+
+    function Product1(name,color){
+        this.name=name;
+        this.color=color;
+        this.method=function(){
+            return 'This is a test';
+        };
+    }
+    Product1.prototype.price=8888;//定义两个原型属性
+    Product1.prototype.date='2018-1-7';
+    var obj2=new Product1('苹果x','玫瑰金');
+    for(var i in obj2){
+       // console.log(i);//这个是返回对象的属性值
+        //console.log(obj2[i]);//这个是返回对象的属性
+        //添加判断，去除原型属性的输出
+        if(obj2.hasOwnProperty(i)){
+            console.log(i);//这个是返回对象的属性  name color method
+
+            
+        }
+    }
+
+
+    </script>
+</body>
+</html>

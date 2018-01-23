@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>共享属性迁移到原型链上</title>
+</head>
+
+<body>
+    <script>
+        //举个例子
+
+        // function shape(){
+        //   this.name='shape';
+        // }
+        //新建一个空对象，目的是提高效率，减少缓存数据，和指针速度，这种方式只适合不可修改的属性值
+        function shape() {}
+        //将空对象赋值属性到原型链上
+        shape.prototype.name = 'shape';
+        shape.prototype.toString = function () {
+            return this.name;
+        };
+
+
+        //新建一个空对象
+        function towDshape() {}
+        //继承
+        towDshape.prototype = new shape();
+        towDshape.prototype.constructor = towDshape;
+        //添加原型属性
+        towDshape.prototype.name = '2D shape';
+
+
+        //如何值是可以改变的，不能放在原型链上
+        function Triangle(side, hieght) {
+            this.side = side;
+            this.hieght = hieght;
+        }
+
+        //继承
+        Triangle.prototype = new towDshape();
+        Triangle.prototype.constructor = Triangle;
+        Triangle.prototype.name = 'trangle';
+
+        Triangle.prototype.getArea = function () {
+            return this.side * this.hieght / 2;
+        };
+
+
+        //测试：新建一个对象比传递值
+        var myTriangle=new Triangle(5,5);
+        console.log(myTriangle.name);
+        console.log(myTriangle.getArea());
+        //检测自身属性和原型属性
+        console.log(myTriangle.hasOwnProperty('side'));//true
+        console.log(myTriangle.hasOwnProperty('name'));//false
+
+        console.log(myTriangle instanceof shape);//true
+        console.log(myTriangle instanceof towDshape);//true
+        console.log(myTriangle instanceof Triangle);//true
+
+        
+        
+
+
+    </script>
+</body>
+
+</html>

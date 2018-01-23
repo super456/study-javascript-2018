@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>扩展内建对象练习</title>
+</head>
+<body>
+    <script>
+    //给字符串添加数组的颠倒顺序的扩展方法
+    String.prototype.reverse=function(){
+        return Array.prototype.reverse.apply(this.split('')).join('  ');
+    };
+    console.log('dudu456'.reverse());
+    
+
+    //检测方法是否存在，不存在则扩展方法
+    //通过原型扩展内建对象方法
+    if(!Array.prototype.inArray){
+        Array.prototype.inArray=function(param){
+            for(var i=0;i<this.length;i++){
+                if(this[i]==param){
+                    return true;
+                }
+                
+            }
+            return false;
+            
+        }
+    }
+var arr=['a','b','c'];
+console.log(arr.inArray('a'));//查找数组里面是否存在某个值  true  区分大小写
+
+
+//__proto__和prototype
+
+
+function Person(){
+    this.mouth=true;
+}
+var p1=new Person();
+var p2=new Person();
+
+Person.prototype.say=function(){
+    return 'hello';
+};
+console.log(p1.say());//可以调用后面创建的原型方法
+console.log(p2.say());//
+
+console.log(p1.constructor);//ƒ Person(){this.mouth=true;}
+console.log(p1.constructor.prototype.constructor);//ƒ Person(){this.mouth=true;}
+console.log(p1.constructor.prototype);//{say: ƒ, constructor: ƒ}
+
+console.log(p1.constructor.prototype.mouth);//undefined
+
+//注意原有的对象是不能访问新的原型属性对象的
+Person.prototype={
+    hair:true,
+    face:true
+};
+console.log(p1.face);//undefined
+
+
+var p3=new Person();
+console.log(p3.__proto__.say);//undefined
+//console.log(p3.say());//会报错，因为这个引用对象变成了：Object，解决办法是重置constructor属性
+console.log(p3.face);//true
+console.log(p3.constructor);//ƒ Object() { [native code] }
+console.log(p1.constructor);//ƒ Person(){this.mouth=true;}
+
+//重置constructor属性
+Person.prototype.constructor=Person;
+
+console.log(p3.constructor);//ƒ Person(){this.mouth=true;}
+console.log(p3.face);//true
+//console.log(p3.say());//还是调用不了这个方法
+
+var p4=new Person();
+console.log(p4.constructor);//注意：重置之后，之前创建的原型属性没有了
+//console.log(p4.say());//会报错
+
+
+
+    </script>
+</body>
+</html>

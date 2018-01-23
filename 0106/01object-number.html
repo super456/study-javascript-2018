@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Number对象和Boolean对象练习</title>
+</head>
+
+<body>
+    <script>
+        //使用构造器方法创建对象使用
+        var n = Number('456');
+        console.log(n); //456
+        console.log(typeof n); //number
+        var n1 = new Number(123456);
+        console.log(n1); //Number {123456}
+        //使用number对象的内置方法
+        console.log(Number.MAX_VALUE); //1.7976931348623157e+308
+        console.log(Number.MIN_VALUE); //5e-324
+        console.log(Number.MAX_SAFE_INTEGER); //9007199254740991
+        console.log(Number.isNaN(0 / 0)); //true
+
+
+        //Number对象常用调用方法
+        //1. toFixed(param)，四舍五入方法，param代表精确的位数，没有表示取整
+        var n2 = 123456.789;
+        console.log(n2.toFixed()); //123457
+        console.log(n2.toFixed(1)); //123456.8
+        console.log(n2.toFixed(6)); //123456.789000
+        console.log(12E+5.toFixed(2)); //1200000.00
+
+        //以指数的形式返回，注意toExponential(param)，param代表保留小数后几位
+        var n3 = 44123.456;
+        console.log(n3.toExponential()); //4.4123456e+4
+        console.log(n3.toExponential(2)); //4.41e+4
+
+        //toPrecision(param)，返回该数字的位数，param表示返回几位
+        var n4 = 5.123456789
+        console.log(n4.toPrecision(1)); //5
+        console.log((123.456789).toPrecision(2)); //返回溢出的用指数方式解决,1.2e+2
+
+        //toString(param)，该方法返回的是指定参数的进制，param表示需要转换的进制，可以为2（二进制）,8（八进制）,10(默认是十进制),16（十六进制）
+        var n5 = 255;
+        console.log(n5.toString()); //255
+        console.log(n5.toString(2)); //11111111
+        console.log(n5.toString(8)); //377
+        console.log(n5.toString(16)); //ff
+
+
+        //测试布尔对象
+        var bl = new Boolean();
+        console.log(typeof bl); //object
+        console.log(bl.valueOf()); //false
+        console.log(typeof bl.valueOf()); //boolean
+
+        //注意：如果是0,-0,null,undefined,false,Nan,或者空字符串，生成的布尔对象值为false，其他任何值包括对象，或者字符串'false'的值都为true的布尔对象值
+        var b2 = Boolean(0); //false
+        var b2 = Boolean(-0); //false
+        var b2 = Boolean(null); //false
+        var b2 = Boolean(undefined); //false
+        var b2 = Boolean(NaN); //false
+
+        console.log(b2);
+        var b3 = Boolean('false');
+        console.log(b3); //true
+    </script>
+</body>
+
+</html>
